@@ -12,6 +12,8 @@ Feel free to use it if you like. */
 
 svg {
 	position: absolute;
-	top:50px;
-	left:50px;
+}
+
+svg .player {
+	border-color: pink;
 }
