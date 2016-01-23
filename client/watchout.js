@@ -1,10 +1,10 @@
 // start slingin' some d3 here.
-var RADIUS = 12.5;
-var BOARD_SIZE = 500;
+var RADIUS = 20;
+var BOARD_SIZE = 800;
 
-var enemyList = [1, 2, 3, 4];
+var enemyList = [1, 2, 3, 4,5];
 
-var playerList = [{'width': 500, 'height': 500, 'r': 12.5}];
+var playerList = [{'width': BOARD_SIZE, 'height': BOARD_SIZE, 'r': RADIUS*0.75}];
 
 var enemies = d3.select(".board").selectAll("svg.enemies")
 	.data(enemyList);
@@ -24,11 +24,11 @@ var drag = d3.behavior.drag()
 		var dx = d3.event.x;
 		var dy = d3.event.y;
 
-		dx = dx < 487.5 ? dx : 487.5;
-		dx = dx > 12.5 ? dx : 12.5;
+		dx = dx < BOARD_SIZE - RADIUS ? dx : BOARD_SIZE - RADIUS;
+		dx = dx > RADIUS ? dx : RADIUS;
 
-		dy = dy < 487.5 ? dy : 487.5;
-		dy = dy > 12.5 ? dy : 12.5;
+		dy = dy < BOARD_SIZE - RADIUS ? dy : BOARD_SIZE - RADIUS;
+		dy = dy > RADIUS ? dy : RADIUS;
 
 		//d3.select(this).attr("transform", "translate(" + dx + ", " + dy + ")");
 		player.select('circle').attr("cy", dy).attr("cx", dx);
@@ -63,33 +63,33 @@ var createEnemies = function(){
 
 	enemies.enter()
 		.append("svg")
-		.attr('width', 25)
-		.attr('height', 25)
+		.attr('width', RADIUS*2)
+		.attr('height', RADIUS*2)
 		.style("top", function(){
-			return Math.floor(Math.random()*475);
+			return Math.floor(Math.random()*(BOARD_SIZE - RADIUS*2));
 		})
 		.style("left", function(){
-			return Math.floor(Math.random()*475);
+			return Math.floor(Math.random()*(BOARD_SIZE - RADIUS*2));
 		})
 		.classed('enemies', true)
 		.append("image")
-		.attr("xlink:href", "asteroid.png")
-		.attr('width', 25)
-		.attr('height', 25); 
+		.attr("xlink:href", "tiefighter.png")
+		.attr('width', RADIUS*2)
+		.attr('height', RADIUS*2); 
 };
 
 var checkCollision = function(enemyX, enemyY, playerX, playerY) {
 	var xDiff = Math.abs(enemyX - playerX);
 	var yDiff = Math.abs(enemyY - playerY);
 
-	return xDiff < RADIUS*2 && yDiff < RADIUS*2;
+	return xDiff < RADIUS+0.75*RADIUS && yDiff < RADIUS+0.75*RADIUS;
 };
 
 var updateLocation = function() {
 	var generate = function(n){
 		var result = [];
 		for(var i = 0; i<n; i++){
-			result.push(Math.floor(Math.random()*475));
+			result.push(Math.floor(Math.random()*(BOARD_SIZE - RADIUS*2)));
 		}
 		return result;
 	};

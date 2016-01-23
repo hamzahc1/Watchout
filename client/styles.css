@@ -4,9 +4,9 @@
 Feel free to use it if you like. */
 
 .board, .mouse{
-	background-color: lightblue; 
-	width: 500px;
-	height: 500px;
+	background-image: url('hoth.jpg'); 
+	width: 800px;
+	height: 800px;
 	position: absolute;
 }
 
@@ -16,4 +16,48 @@ svg {
 
 svg .player {
 	border-color: pink;
+}
+
+@keyframes scoreAnimation {
+	0% {color: black;}
+	25% {color: #ff3333;}
+	50% {color: #0099ff;}
+	75% {color: green;}
+	100% {color: orange;}
+}
+
+.current {
+	animation-name: scoreAnimation;
+	animation-duration: 8s;
+	animation-iteration-count: infinite;
+	font-family: sans-serif;
+}
+
+.enemies {
+    -webkit-animation-name: rotate; 
+    -webkit-animation-duration: 1.5s; 
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: rotate; 
+    -moz-animation-duration: 1.5s; 
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+    animation-name: rotate; 
+    animation-duration: 1.5s; 
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@-webkit-keyframes rotate {
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+}
+
+@-moz-keyframes rotate {
+    from {-moz-transform: rotate(0deg);}
+    to {-moz-transform: rotate(360deg);}
+}
+
+@keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
 }
