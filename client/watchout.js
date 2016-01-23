@@ -10,32 +10,33 @@ var player =d3.select(".mouse").selectAll("svg.player")
 		.data(playerList);
 
 var drag = d3.behavior.drag()
-	.on('dragstart', function(){ 
-		player.style("fill", "red");
-	})
 	.on("drag", function(){
-		player.style("top", d3.event.y).style("left", d3.event.x);
-	})
-	.on("dragend", function(){
-		player.style("fill", "black");
+		var dx = d3.event.x - 250;
+		var dy = d3.event.y - 250;
+		d3.select(this).attr("transform", "translate(" + dx + ", " + dy + ")");
+		// player.style("top", d3.event.y - 12.5).style("left", d3.event.x - 12.5);
 	});
+	// .on("dragend", function(){
+	// 	player.style("fill", "black");
+	// });
 
 var createPlayer = function(){
 	player.enter()
 		.append("svg")
-		.attr("width", "25px")
-		.attr("height", "25px")
-		.style("top", function(d){
-			return d.top;
-		})
-		.style("left", function(d){
-			return d.left;
-		})
+		.attr("width", "500px")
+		.attr("height", "500px")
+		// .style("top", function(d){
+		// 	return d.top;
+		// })
+		// .style("left", function(d){
+		// 	return d.left;
+		// })
 		.classed("player", true)
 		.append("circle")
-		.attr("cx", "12.5px")
-		.attr("cy", "12.5px")
+		.attr("cx", "250px")
+		.attr("cy", "250px")
 		.attr("r", "12.5px")
+		.attr("cursor", "pointer")
 		.call(drag);
 };
 
