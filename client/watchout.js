@@ -6,10 +6,22 @@ var playerList = [{'top': '50px', 'left': '50px'}];
 var enemies = d3.select(".board").selectAll("svg.enemies")
 	.data(enemyList);
 
+var player =d3.select(".mouse").selectAll("svg.player")
+		.data(playerList);
+
+var drag = d3.behavior.drag()
+	.on('dragstart', function(){ 
+		player.style("fill", "red");
+	})
+	.on("drag", function(){
+		player.style("top", d3.event.y).style("left", d3.event.x);
+	})
+	.on("dragend", function(){
+		player.style("fill", "black");
+	});
+
 var createPlayer = function(){
-	d3.select(".mouse").selectAll("svg.player")
-		.data(playerList)
-		.enter()
+	player.enter()
 		.append("svg")
 		.attr("width", "25px")
 		.attr("height", "25px")
@@ -23,7 +35,8 @@ var createPlayer = function(){
 		.append("circle")
 		.attr("cx", "12.5px")
 		.attr("cy", "12.5px")
-		.attr("r", "12.5px");
+		.attr("r", "12.5px")
+		.call(drag);
 };
 
 var createEnemies = function(){
@@ -55,6 +68,10 @@ var updateLocation = function() {
 		});
 };
 
+
 createPlayer();
 createEnemies();
 setInterval(updateLocation, 1000);
+
+
+// player.call(drag);
