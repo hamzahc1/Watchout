@@ -12,7 +12,9 @@ var enemies = d3.select(".board").selectAll("svg.enemies")
 var player =d3.select(".mouse").selectAll("svg.player")
 		.data(playerList);
 
-// var scoreBoard = d3.select("scoreBoard").selectAll("div")
+var currentScore = d3.select(".current").select("span");
+var highScore = d3.select(".highscore").select("span");
+var collisions = d3.select(".collisions").select("span");
 
 var drag = d3.behavior.drag()
 	// .on("dragstart", function(){
@@ -72,8 +74,8 @@ var createEnemies = function(){
 		.classed('enemies', true)
 		.append("image")
 		.attr("xlink:href", "asteroid.png")
-		.attr('width', '25px')
-		.attr('height', '25px'); 
+		.attr('width', 25)
+		.attr('height', 25); 
 };
 
 var checkCollision = function(enemyX, enemyY, playerX, playerY) {
@@ -110,7 +112,8 @@ var updateLocation = function() {
 				var playerY = player.select('circle').attr('cy');
 
 				if (checkCollision(currentX+RADIUS, currentY+RADIUS, playerX, playerY)) {
-					player.style("fill","red");
+
+					restartGame();
 				}
 			};
 
@@ -125,10 +128,35 @@ var updateLocation = function() {
 		.delay(1000);
 };
 
+var updateScore = function() {
+	var score = Number(currentScore.text());
+	score++;
+	currentScore.text(score);
+};
+
+var restartGame = function() {
+	var score = Number(currentScore.text());
+	var currentHighScore = Number(highScore.text());
+
+	if (score > currentHighScore) {
+		highScore.text(score);
+	}
+
+	currentScore.text('0');
+	setTimeout(function(){
+		var numCollisions = Number(collisions.text()) + 1;
+		collisions.text(numCollisions);
+	}, 500);
+
+	player.style("fill","red");
+	setTimeout(function(){
+		player.style("fill", "black");
+	}, 500);
+};
 
 createPlayer();
 createEnemies();
 setInterval(updateLocation, 1200);
-
+setInterval(updateScore, 500);
 
 // player.call(drag);
