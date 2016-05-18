@@ -73,7 +73,7 @@ var createEnemies = function(){
 		})
 		.classed('enemies', true)
 		.append("image")
-		.attr("xlink:href", "tiefighter.png")
+		.attr("xlink:href", "style/tiefighter.png")
 		.attr('width', RADIUS*2)
 		.attr('height', RADIUS*2); 
 };
